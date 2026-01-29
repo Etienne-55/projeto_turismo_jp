@@ -5,6 +5,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+
 var DB *sql.DB
 
 func InitDB() {
@@ -20,7 +21,6 @@ func InitDB() {
 
 	createTables()
 }
-
 
 func createTables() {
 

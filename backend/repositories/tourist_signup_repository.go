@@ -1,13 +1,28 @@
 package repositories
 
 import (
+	"database/sql"
 	"projeto_turismo_jp/db"
 	"projeto_turismo_jp/models"
 	"projeto_turismo_jp/utils"
 )
 
 
-func Save(t *models.Tourist) error {
+type TouristRepository interface {
+	Save(tourist *models.Tourist) error
+}
+
+type touristRepositoryImpl struct {
+	db *sql.DB
+}
+
+func NewTouristRepository(db *sql.DB) TouristRepository {
+	return &touristRepositoryImpl{
+		db: db,
+	}
+}
+
+func (r *touristRepositoryImpl) Save(t *models.Tourist) error {
 	query := "INSERT INTO tourist(email, password) VALUES (?, ?)"
 	stmt, err := db.DB.Prepare(query)
 	if err != nil {
@@ -32,3 +47,4 @@ func Save(t *models.Tourist) error {
 	return err
 
 }
+
