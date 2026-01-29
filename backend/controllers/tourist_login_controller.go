@@ -15,14 +15,13 @@ func (tc *TouristController) Login(context *gin.Context) {
 
 	err := context.ShouldBindJSON(&tourist)
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "invalid credentials 1"})
+		log.Printf("error: %v", err)
 		return	
 	}
 
 	err = tc.repo.ValidateCredentials(&tourist)
 	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "invalid credentials 2"} )
-		log.Printf("error: %w", err)
+		log.Printf("error: %v", err)
 		return
 	}
 

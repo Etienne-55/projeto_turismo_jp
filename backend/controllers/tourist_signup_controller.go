@@ -3,21 +3,10 @@ package controllers
 import (
 	"net/http"
 	"projeto_turismo_jp/models"
-	"projeto_turismo_jp/repositories"
 
 	"github.com/gin-gonic/gin"
 )
 
-
-type TouristController struct {
-	repo repositories.TouristRepository
-}
-
-func NewTouristController(repo repositories.TouristRepository) *TouristController {
-	return &TouristController{
-		repo: repo,
-	}
-}
 
 func (tc *TouristController) Signup(context *gin.Context) {
 	var tourist models.Tourist
