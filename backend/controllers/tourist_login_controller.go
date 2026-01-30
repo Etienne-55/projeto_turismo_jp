@@ -10,6 +10,15 @@ import (
 )
 
 
+// Signup godoc
+// @Summary      Login in a tourist account
+// @Tags         Authentication
+// @Accept       json
+// @Param        request body models.Tourist true "Signup credentials"
+// @Success      201 {object} map[string]string "User loged in"
+// @Failure      400 {object} map[string]string "Invalid request"
+// @Failure      500 {object} map[string]string "Internal server error"
+// @Router       /login [post]
 func (tc *TouristController) Login(context *gin.Context) {
 	var tourist models.Tourist
 

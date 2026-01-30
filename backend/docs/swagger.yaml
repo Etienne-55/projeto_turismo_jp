@@ -27,6 +27,39 @@ info:
   title: Tourism Platform API
   version: "1.0"
 paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Signup credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Tourist'
+      responses:
+        "201":
+          description: User loged in
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login in a tourist account
+      tags:
+      - Authentication
   /signup:
     post:
       consumes:

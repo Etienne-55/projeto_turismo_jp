@@ -36,5 +36,25 @@ func createTables() {
 	if err != nil {
 		panic("could not create tourist table")
 	}
+
+	createTripTable := `
+	CREATE TABLE IF NOT EXISTS trip (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	lodging_location TEXT NOT NULL,
+	trip_description TEXT NOT NULL,
+	arrival_date DATE NOT NULL,
+	departure_date DATE NOT NULL,
+	status TEXT DEFAULT 'upcoming' CHECK(status IN ('upcoming', 'ongoing', 'completed')),
+	tourist_id INTEGER,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY(tourist_id) REFERENCES tourist(id)
+	)
+	`
+	_, err = DB.Exec(createTripTable)
+
+	if err != nil {
+		panic("could not create trip table")
+	}
 }
 
