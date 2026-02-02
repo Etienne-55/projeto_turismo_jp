@@ -21,4 +21,17 @@ func NewTouristRepository(db *sql.DB) TouristRepository {
 	}
 }
 
+type TripRepository interface {
+	SaveTrip(trip *models.Trip) error
+}
+
+type tripRepositoryImpl struct {
+	db *sql.DB
+}
+
+func NewTripRepository(db *sql.DB) TripRepository {
+	return &tripRepositoryImpl{
+		db: db,
+	}
+}
 

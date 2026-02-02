@@ -2,6 +2,7 @@ package routes
 
 import (
 	"projeto_turismo_jp/controllers"
+	"projeto_turismo_jp/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +10,7 @@ import (
 
 type Dependencies struct {
 	TouristController *controllers.TouristController
+	TripController *controllers.TripController
 	//add more when needed
 }
 
@@ -22,10 +24,9 @@ func AppRoutes(server *gin.Engine, deps *Dependencies){
 		c.String(200, "pong")
 	})
 
-	// protected := server.Group("/api")
-	// {
-	// 	//protected route for auth required functions
-	// }
-
+	//protected routes
+	authenticated := server.Group("/")
+	authenticated.Use(middleware.Authenticate)
+	authenticated.POST("/trip", deps.TripController.CreateTrip)
 }
 

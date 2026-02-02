@@ -1,31 +1,31 @@
+package repositories
+
+import (
+	"projeto_turismo_jp/db"
+	"projeto_turismo_jp/models"
+)
 
 
+func (r *tripRepositoryImpl) SaveTrip(t *models.Trip) error {
+	query := `
+	INSERT INTO trip(lodging_location, trip_description, arrival_date, departure_date)
+	VALUES (?, ?, ?, ?)`
 
-
-
-
-
-
-
-
-
-
-
-func (r *touristRepositoryImpl) ValidateCredentials(t *models.Tourist) error {
-	query := "SELECT id, password FROM tourist WHERE email = ?"
-	row := db.DB.QueryRow(query, t.Email)
-
-	var retreivedPassword string
-	err := row.Scan(&t.ID, &retreivedPassword)
+	stmt, err := db.DB.Prepare(query)
 	if err != nil {
-		return errors.New("error retreiving user data")
+		return err
+	}
+	
+	defer stmt.Close()
+	result, err := stmt.Exec(t.LodgingLocation, t.TripDescription, t.ArrivalDate, t.DepartureDate)
+	if err != nil {
+		return err
 	}
 
-	passwordIsValid := utils.CheckPasswordHash(t.Password, retreivedPassword)
-	if !passwordIsValid {
-		return errors.New("passwords dont match")
-	}
+	id, err := result.LastInsertId()
+	t.ID = id
+	// events = append(events, *t)
+	return err
 
-	return nil 
 }
 
