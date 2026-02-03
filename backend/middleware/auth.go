@@ -13,7 +13,7 @@ func Authenticate(context *gin.Context) {
 	token := context.Request.Header.Get("Authorization")
 
 	if token == "" {
-		context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "not authorized1"})
+		context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "not authorized"})
 		return
 	}
 	token = strings.TrimPrefix(token, "Bearer ")

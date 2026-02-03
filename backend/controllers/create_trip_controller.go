@@ -23,6 +23,6 @@ func (tc *TripController) CreateTrip( context *gin.Context) {
 
 	tc.repo.SaveTrip(&trip)
 
-	context.JSON(http.StatusOK, gin.H{"message": "event saved"})
+	context.JSON(http.StatusOK, gin.H{"message": "trip saved"})
 }
 
