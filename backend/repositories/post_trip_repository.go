@@ -8,8 +8,8 @@ import (
 
 func (r *tripRepositoryImpl) SaveTrip(t *models.Trip) error {
 	query := `
-	INSERT INTO trip(lodging_location, trip_description, arrival_date, departure_date)
-	VALUES (?, ?, ?, ?)`
+	INSERT INTO trip(lodging_location, trip_description, arrival_date, departure_date, tourist_id)
+	VALUES (?, ?, ?, ?, ?)`
 
 	stmt, err := db.DB.Prepare(query)
 	if err != nil {
@@ -17,7 +17,13 @@ func (r *tripRepositoryImpl) SaveTrip(t *models.Trip) error {
 	}
 	
 	defer stmt.Close()
-	result, err := stmt.Exec(t.LodgingLocation, t.TripDescription, t.ArrivalDate, t.DepartureDate)
+	result, err := stmt.Exec(
+		t.LodgingLocation, 
+		t.TripDescription, 
+		t.ArrivalDate, 
+		t.DepartureDate,
+		t.TouristID,
+		)
 	if err != nil {
 		return err
 	}

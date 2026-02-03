@@ -22,6 +22,46 @@
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
+        "/get_all_trips": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Trip"
+                ],
+                "summary": "Get all trips registered on the database",
+                "responses": {
+                    "201": {
+                        "description": "Database data",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "consumes": [
@@ -127,9 +167,97 @@
                     }
                 }
             }
+        },
+        "/trip": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Registered tourist creates their upcoming trip",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Trip"
+                ],
+                "summary": "Create a new trip from logged user",
+                "parameters": [
+                    {
+                        "description": "Trip details",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.CreateTripRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Trip created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.CreateTripResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "controllers.CreateTripRequest": {
+            "type": "object",
+            "required": [
+                "arrival_date",
+                "departure_date",
+                "lodging_location"
+            ],
+            "properties": {
+                "arrival_date": {
+                    "type": "string"
+                },
+                "departure_date": {
+                    "type": "string"
+                },
+                "lodging_location": {
+                    "type": "string"
+                },
+                "trip_description": {
+                    "type": "string"
+                }
+            }
+        },
+        "controllers.CreateTripResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "user created successfully"
+                }
+            }
+        },
         "models.Tourist": {
             "type": "object",
             "required": [

@@ -1,5 +1,26 @@
 basePath: /
 definitions:
+  controllers.CreateTripRequest:
+    properties:
+      arrival_date:
+        type: string
+      departure_date:
+        type: string
+      lodging_location:
+        type: string
+      trip_description:
+        type: string
+    required:
+    - arrival_date
+    - departure_date
+    - lodging_location
+    type: object
+  controllers.CreateTripResponse:
+    properties:
+      message:
+        example: user created successfully
+        type: string
+    type: object
   models.Tourist:
     properties:
       email:
@@ -27,6 +48,32 @@ info:
   title: Tourism Platform API
   version: "1.0"
 paths:
+  /get_all_trips:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "201":
+          description: Database data
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all trips registered on the database
+      tags:
+      - Trip
   /login:
     post:
       consumes:
@@ -96,6 +143,42 @@ paths:
       summary: Create a new tourist account
       tags:
       - Authentication
+  /trip:
+    post:
+      consumes:
+      - application/json
+      description: Registered tourist creates their upcoming trip
+      parameters:
+      - description: Trip details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CreateTripRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Trip created successfully
+          schema:
+            $ref: '#/definitions/controllers.CreateTripResponse'
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Create a new trip from logged user
+      tags:
+      - Trip
 schemes:
 - http
 - https

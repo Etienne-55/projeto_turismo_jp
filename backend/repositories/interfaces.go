@@ -24,7 +24,6 @@ func NewTouristRepository(db *sql.DB) TouristRepository {
 type TripRepository interface {
 	GetAllTrips() ([]models.Trip, error)
 	SaveTrip(trip *models.Trip) error
-	DeleteTrip(trip *models.Trip) error
 }
 
 type tripRepositoryImpl struct {

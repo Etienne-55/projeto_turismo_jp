@@ -16,10 +16,20 @@ func (r *tripRepositoryImpl) GetAllTrips() ([]models.Trip, error) {
 
 	var trips []models.Trip
 	
-
 	for rows.Next() {
 		var trip models.Trip
-		err := rows.Scan(&trip.ID, &trip.LodgingLocation, &trip.TripDescription, &trip.ArrivalDate, &trip.DepartureDate)
+		err := rows.Scan(
+		&trip.ID, 
+		&trip.LodgingLocation, 
+		&trip.TripDescription, 
+		&trip.ArrivalDate,
+		&trip.DepartureDate,
+		&trip.TripReview,
+		&trip.Status,
+		&trip.TouristID,
+		&trip.CreatedAt,
+		&trip.UpdatedAt,
+		)
 		if err != nil {
 			return nil, err
 		}

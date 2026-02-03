@@ -8,6 +8,14 @@ import (
 )
 
 
+// Signup godoc
+// @Summary      Get all trips registered on the database
+// @Tags         Trip
+// @Accept       json
+// @Success      201 {object} map[string]string "Database data"
+// @Failure      400 {object} map[string]string "Invalid request"
+// @Failure      500 {object} map[string]string "Internal server error"
+// @Router       /get_all_trips [get]
 func (tc *TripController) GetAllTrips(context *gin.Context) {
 	trips, err := tc.repo.GetAllTrips()
 	if err != nil {
