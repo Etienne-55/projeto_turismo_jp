@@ -19,8 +19,7 @@ func AppRoutes(server *gin.Engine, deps *Dependencies){
 	server.POST("/signup", deps.TouristController.Signup)
 	server.POST("/login", deps.TouristController.Login)
 	server.GET("/get_all_trips", deps.TripController.GetAllTrips)
-	server.GET("/get_trip_by_id/:id", deps.TripController.GetTripById)
-	server.GET("/delete_trip")
+	server.GET("/get_trip_by_id/:id", deps.TripController.GetTripByID)
 
 	//test route
 	server.GET("/test", func(c *gin.Context) {
@@ -31,5 +30,6 @@ func AppRoutes(server *gin.Engine, deps *Dependencies){
 	authenticated := server.Group("/")
 	authenticated.Use(middleware.Authenticate)
 	authenticated.POST("/trip", deps.TripController.CreateTrip)
+	authenticated.DELETE("/delete_trip/:id", deps.TripController.DeleteTrip)
 }
 

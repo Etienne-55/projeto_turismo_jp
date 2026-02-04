@@ -25,7 +25,7 @@ type TripRepository interface {
 	GetTripByID(id int64) (*models.Trip, error)
 	GetAllTrips() ([]models.Trip, error)
 	SaveTrip(trip *models.Trip) error
-	DeleteTrip(trip *models.Trip) error
+	DeleteTrip(id int64) error
 }
 
 type tripRepositoryImpl struct {
