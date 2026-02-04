@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 	"projeto_turismo_jp/models"
 
@@ -37,12 +38,14 @@ func (tc *TouristController) Signup(context *gin.Context) {
 	err := context.ShouldBindJSON(&tourist)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message":"error"})
+		log.Printf("error: %v", err)
 		return
 	}
 
 	err = tc.repo.Save(&tourist)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message":"error"})
+		log.Printf("error: %v", err)
 		return
 	}
 	context.JSON(http.StatusCreated, gin.H{"message":"user created successfully"})

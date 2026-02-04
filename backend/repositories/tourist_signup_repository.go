@@ -8,7 +8,7 @@ import (
 
 
 func (r *touristRepositoryImpl) Save(t *models.Tourist) error {
-	query := "INSERT INTO tourist(email, password) VALUES (?, ?)"
+	query := "INSERT INTO tourist(email, password, role) VALUES (?, ?, 'user')"
 	stmt, err := db.DB.Prepare(query)
 	if err != nil {
 		return err

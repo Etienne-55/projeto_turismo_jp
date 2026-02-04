@@ -9,11 +9,11 @@ import (
 
 
 func (r *touristRepositoryImpl) ValidateCredentials(t *models.Tourist) error {
-	query := "SELECT id, password FROM tourist WHERE email = ?"
+	query := "SELECT id, password, role FROM tourist WHERE email = ?"
 	row := db.DB.QueryRow(query, t.Email)
 
 	var retreivedPassword string
-	err := row.Scan(&t.ID, &retreivedPassword)
+	err := row.Scan(&t.ID, &retreivedPassword, &t.Role)
 	if err != nil {
 		return errors.New("error retreiving user data")
 	}

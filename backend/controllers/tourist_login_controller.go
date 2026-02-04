@@ -34,7 +34,7 @@ func (tc *TouristController) Login(context *gin.Context) {
 		return
 	}
 
-	token, err := utils.GenerateToken(tourist.Email, tourist.ID)
+	token, err := utils.GenerateToken(tourist.Email, tourist.ID, tourist.Role)
 	if err != nil {
 		log.Printf("token generation failed for user %d: %v", tourist.ID, err)
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not authenticate user", "error": err} )

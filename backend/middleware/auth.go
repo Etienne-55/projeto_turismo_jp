@@ -17,13 +17,14 @@ func Authenticate(context *gin.Context) {
 	}
 	token = strings.TrimPrefix(token, "Bearer ")
 
-	touristID, err := utils.VerifyToken(token)
+	touristID, role, err := utils.VerifyToken(token)
 	if err != nil {
 		context.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 		return
 	}
 
 	context.Set("touristID", touristID)
+	context.Set("role", role)
 	context.Next()
 }
 

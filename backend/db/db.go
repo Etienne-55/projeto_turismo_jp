@@ -2,6 +2,9 @@ package db
 
 import (
 	"database/sql"
+	"log"
+	"projeto_turismo_jp/utils"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -20,6 +23,7 @@ func InitDB() {
 	DB.SetConnMaxIdleTime(5)
 
 	createTables()
+	createAdminUser()
 }
 
 func createTables() {
@@ -27,7 +31,8 @@ func createTables() {
 	CREATE TABLE IF NOT EXISTS tourist (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		email TEXT NOT NULL UNIQUE,
-		password TEXT NOT NULL
+		password TEXT NOT NULL,
+		role TEXT DEFAULT 'user'
 	)
 	`
 	_, err := DB.Exec(createTouristTable)
@@ -58,3 +63,21 @@ func createTables() {
 	}
 }
 
+func createAdminUser() {
+    var count int
+    err := DB.QueryRow("SELECT COUNT(*) FROM tourist WHERE role = 'admin'").Scan(&count)
+    if err != nil || count > 0 {
+        return 
+    }
+    
+    hashedPassword, _ := utils.HashPassword("admin123")  
+    
+    query := `INSERT INTO tourist (email, password, role) VALUES (?, ?, ?)`
+    _, err = DB.Exec(query, "admin@proton.me", hashedPassword, "admin")
+    
+    if err != nil {
+        log.Printf("Failed to create admin: %v", err)
+    } else {
+        log.Println("Admin user created: admin@example.com")
+    }
+}
