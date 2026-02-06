@@ -101,14 +101,14 @@ go build -o tourism-api
 ## Admin Setup
 
 Default admin account is created on first run:
-* Email: `admin@example.com`
+* Email: `admin@proton.me`
 * Password: `admin123`
 
 **Change this immediately in production!**
 
 ## Configuration
 
-Database file: `tourism.db` (created automatically)
+Database file: `api.db` (created automatically)
 
 JWT secret: Configured in `utils/jwt.go` (use environment variables in production)
 

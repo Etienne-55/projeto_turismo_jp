@@ -31,6 +31,7 @@ func AppRoutes(server *gin.Engine, deps *Dependencies){
 	authenticated.POST("/trip", deps.TripController.CreateTrip)
 	authenticated.DELETE("/delete_trip/:id", deps.TripController.DeleteTrip)
 	authenticated.GET("/get_trip_by_id/:id", deps.TripController.GetTripByID)
+	authenticated.PUT("/add_trip_review/:id", deps.TripController.AddReview)
 	}
 
 	//protected routes(admin)
