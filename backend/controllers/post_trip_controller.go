@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"projeto_turismo_jp/models"
@@ -45,6 +46,13 @@ func (tc *TripController) CreateTrip(context *gin.Context) {
 
 	trip.TouristID = int(touristID)
 	tc.repo.SaveTrip(&trip)
+
+	tc.hub.SendNotification(
+		"trip_created",
+		fmt.Sprintf("new trip to %s created!", trip.LodgingLocation),
+		trip,
+		)
+
 	context.JSON(http.StatusOK, gin.H{"message": "trip saved"})
 }
 

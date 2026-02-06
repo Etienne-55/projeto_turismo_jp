@@ -1,6 +1,9 @@
 package controllers
 
-import "projeto_turismo_jp/repositories"
+import (
+	"projeto_turismo_jp/repositories"
+	"projeto_turismo_jp/websocket"
+)
 
 
 type TouristController struct {
@@ -15,11 +18,13 @@ func NewTouristController(repo repositories.TouristRepository) *TouristControlle
 
 type TripController struct {
 	repo repositories.TripRepository
+	hub *websocket.Hub
 }
 
-func NewTripController(repo repositories.TripRepository) *TripController{
+func NewTripController(repo repositories.TripRepository, hub *websocket.Hub) *TripController{
 	return &TripController{
 		repo: repo,
+		hub: hub,
 	}
 }
 

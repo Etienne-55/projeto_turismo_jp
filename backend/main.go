@@ -7,8 +7,11 @@ import (
 	"projeto_turismo_jp/repositories"
 	"projeto_turismo_jp/routes"
 	"projeto_turismo_jp/server"
+	"projeto_turismo_jp/websocket"
 
 	_ "projeto_turismo_jp/docs"
+
+	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -36,6 +39,10 @@ import (
 // @description Type "Bearer" followed by a space and JWT token.
 func main() {
 	db.InitDB()
+
+	hub := websocket.NewHub()
+	go hub.Run()
+
 	server := server.SetupServer()
 
 	//Data layer
@@ -44,7 +51,7 @@ func main() {
 
 	//http layer
 	touristController := controllers.NewTouristController(touristRepo)
-	tripController := controllers.NewTripController(tripRepo)
+	tripController := controllers.NewTripController(tripRepo, hub)
 
 	deps := &routes.Dependencies{
 		TouristController: touristController,
@@ -52,6 +59,9 @@ func main() {
 	}
 
 	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	server.GET("/ws", func(c *gin.Context){
+		websocket.ServeWs(hub, c.Writer, c.Request)
+	})
 
 	routes.AppRoutes(server, deps)
 
