@@ -1,1 +1,10 @@
+# Database for local tests
 api.db
+
+# SonarQube files
+.sonar/
+.sonarqube/
+.scannerwork/
+sonar-project.properties
+sonar_run_script.txt
+
