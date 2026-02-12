@@ -14,7 +14,6 @@ var DB *sql.DB
 func InitDB() {
 	var err error 
 	DB, err = sql.Open("sqlite3", "api.db")
-
 	if err != nil {
 		panic("could not connect to database")
 	}
@@ -36,7 +35,6 @@ func createTables() {
 	)
 	`
 	_, err := DB.Exec(createTouristTable)
-
 	if err != nil {
 		panic("could not create tourist table")
 	}
@@ -57,9 +55,22 @@ func createTables() {
 	)
 	`
 	_, err = DB.Exec(createTripTable)
-
 	if err != nil {
 		panic("could not create trip table")
+	}
+
+	createLogTable := `
+	CREATE TABLE IF NOT EXISTS notifications_logs (
+	if INTEGER PRIMARY KEY AUTOINCREMENT,
+	type TEXT NOT NULL,
+	message TEXT NOT NULL,
+	data TEXT,
+	timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+	)
+	`
+	_, err = DB.Exec(createLogTable)
+	if err != nil {
+		panic("could not create log table")
 	}
 }
 
@@ -74,7 +85,6 @@ func createAdminUser() {
     
     query := `INSERT INTO tourist (email, password, role) VALUES (?, ?, ?)`
     _, err = DB.Exec(query, "admin@proton.me", hashedPassword, "admin")
-    
     if err != nil {
         log.Printf("Failed to create admin: %v", err)
     } else {
