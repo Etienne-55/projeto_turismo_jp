@@ -12,8 +12,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
+
 		case "c":
 			m.notifications = []Notification{}
+			return m, nil
+
+		case "r":
+			if !m.connected {
+				m.status = "Reconnecting..."
+				return m, ConnectWebSocket
+			}
 			return m, nil
 		}
 	
@@ -29,7 +37,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	
 	case DisconnectedMsg:
 		m.connected = false
-		m.status = "Disconnected ✗"
+		m.status = "Disconnected ✗ (press 'r' to reconnect)"
 		return m, tea.Tick(time.Second*3, func(t time.Time) tea.Msg {
 			return reconnectMsg{}
 		})

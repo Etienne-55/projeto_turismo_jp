@@ -54,10 +54,19 @@ func (m model) View() string {
 	s.WriteString("\n")
 	s.WriteString(strings.Repeat("─", m.width))
 	s.WriteString("\n")
-	help := helpStyle.Render("Press 'c' to clear | 'q' to quit")
-	s.WriteString(help)
+	// help := helpStyle.Render("Press 'c' to clear | 'q' to quit")
+	// s.WriteString(help)
+	s.WriteString(renderHelp(m.connected))
 	
 	return s.String()
+}
+
+func renderHelp(connected bool) string {
+	if connected {
+		return helpStyle.Render("Press 'c' to clear | 'q' to quit")
+	} else {
+		return helpStyle.Render("Press 'r' to reconnect | 'q' to quit")
+	}
 }
 
 func renderNotification(n Notification) string {
