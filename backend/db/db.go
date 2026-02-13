@@ -60,8 +60,8 @@ func createTables() {
 	}
 
 	createLogTable := `
-	CREATE TABLE IF NOT EXISTS notifications_logs (
-	if INTEGER PRIMARY KEY AUTOINCREMENT,
+	CREATE TABLE IF NOT EXISTS notification_logs (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	type TEXT NOT NULL,
 	message TEXT NOT NULL,
 	data TEXT,

@@ -11,6 +11,7 @@ import (
 type Dependencies struct {
 	TouristController *controllers.TouristController
 	TripController *controllers.TripController
+	LogController *controllers.LogController
 	//add more when needed
 }
 
@@ -40,6 +41,7 @@ func AppRoutes(server *gin.Engine, deps *Dependencies){
 	admin.Use(middleware.RequireAdmin())
 	{
 	server.GET("/get_all_trips", deps.TripController.GetAllTrips)
+		server.GET("/get_all_logs", deps.LogController.GetAllLogs)
 	}
 }
 

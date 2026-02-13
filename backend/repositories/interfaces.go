@@ -39,3 +39,18 @@ func NewTripRepository(db *sql.DB) TripRepository {
 	}
 }
 
+type LogRepository interface {
+	GetAllLogs() ([]models.Notification, error)
+	
+}
+
+type logRepositoryImpl struct {
+	db *sql.DB
+}
+
+func NewlogRepository(db *sql.DB) LogRepository {
+	return &logRepositoryImpl{
+		db: db,
+	}
+}
+

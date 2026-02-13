@@ -19,7 +19,7 @@ import (
 func (tc *TripController) GetAllTrips(context *gin.Context) {
 	trips, err := tc.repo.GetAllTrips()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch events"})
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not fetch trips"})
 		log.Printf("error: %v", err)
 		return
 	}

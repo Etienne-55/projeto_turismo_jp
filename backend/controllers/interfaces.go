@@ -30,3 +30,13 @@ func NewTripController(repo repositories.TripRepository, hub *websocket.Hub) *Tr
 	}
 }
 
+type LogController struct {
+	repo repositories.LogRepository
+}
+
+func NewLogController(repo repositories.LogRepository) *LogController {
+	return &LogController{
+		repo: repo,
+	}
+}
+

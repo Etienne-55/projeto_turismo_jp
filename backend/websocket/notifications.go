@@ -4,18 +4,13 @@ import (
 	"encoding/json"
 	"log"
 	"projeto_turismo_jp/db"
+	"projeto_turismo_jp/models"
 	"time"
 )
 
-type Notification struct {
-    Type      string    `json:"type"`      
-    Message   string    `json:"message"`  
-    Data      any       `json:"data"`     
-    Timestamp time.Time `json:"timestamp"`
-}
 
 func (h *Hub) SendNotification(notifType, message string, data any) {
-    notification := Notification{
+    notification := models.Notification{
         Type:      notifType,
         Message:   message,
         Data:      data,
@@ -38,7 +33,7 @@ func (h *Hub) SendNotification(notifType, message string, data any) {
 	log.Printf("log saved to the database")
 }
 
-func saveNotificationToLog(n Notification) error {
+func saveNotificationToLog(n models.Notification) error {
 	dataJSON, _ := json.Marshal(n.Data)
 
 	query := `INSERT INTO notification_logs (type, message, data, timestamp)
