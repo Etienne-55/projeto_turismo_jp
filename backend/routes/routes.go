@@ -40,8 +40,8 @@ func AppRoutes(server *gin.Engine, deps *Dependencies){
 	admin.Use(middleware.Authenticate())
 	admin.Use(middleware.RequireAdmin())
 	{
-	server.GET("/get_all_trips", deps.TripController.GetAllTrips)
-		server.GET("/get_all_logs", deps.LogController.GetAllLogs)
+	admin.GET("/get_all_trips", deps.TripController.GetAllTrips)
+	admin.GET("/get_all_logs", deps.LogController.GetAllLogs)
 	}
 }
 

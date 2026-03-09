@@ -44,7 +44,7 @@ func (tc *TouristController) Login(context *gin.Context) {
 	tc.hub.SendNotification(
 		"tourist login",
 		fmt.Sprintf("tourist %s, of ID %d loged in", tourist.Email, tourist.ID),
-		tourist,
+		models.SafeLog{ID: tourist.ID, Email: tourist.Email, Role: tourist.Role},
 		)
 
 	context.JSON(http.StatusOK, gin.H{"message": "login successfull", "token": token })

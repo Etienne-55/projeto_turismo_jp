@@ -10,3 +10,10 @@ type Notification struct {
     Data      any       `json:"data"`     
     Timestamp time.Time `json:"timestamp"`
 }
+
+type SafeLog struct {
+	ID 		int64
+	Email string
+	Role 	string
+}
+

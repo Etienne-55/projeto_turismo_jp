@@ -53,10 +53,9 @@ func (tc *TouristController) Signup(context *gin.Context) {
 	tc.hub.SendNotification(
 		"new_tourist_account",
 		fmt.Sprintf("new tourist account created %s", tourist.Email),
-		tourist,
+		models.SafeLog{ID: tourist.ID, Email: tourist.Email, Role: tourist.Role},
 		)
 
 	context.JSON(http.StatusCreated, gin.H{"message":"user created successfully"})
-
 }
 
